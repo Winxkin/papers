@@ -15,9 +15,10 @@
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
 \begin{document}
 
-\title{Enhanced Spectrum Sensing Techniques for 5G New Radio (NR) and Long-Term Evolution (LTE) Utilizing Unet++ Deep Learning Network\\
+\title{Enhanced Spectrum Sensing Techniques For 5G New Radio (NR) And Long-Term Evolution (LTE) Utilizing Unet-Based Deep Learning Network\\
 % delete or comment-out the following line before submission
 % {\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and should not be used}
 % \thanks{Identify applicable funding agency here. If none, delete this.}
@@ -40,324 +41,193 @@
 \maketitle
 
 \begin{abstract}
-    The 5G New Radio (NR) technology emerged as wireless communication revolution that opens opportunities to develop high-tech applications that includes wireless communication industry in specially and others in general. The 5G New Radio offers significantly higher the peak data range, high-frequency, and low-latency comparing to Long-Term Evolution (LTE). Both of them can be distinguished by the frequency range of spectrum extraction. In the recent year, the deep learning network domain introduced various cutting-edge technologies to tackle for semantic segmentation demand, it is essential for applications such as biomedical image segmentation, wireless communication spectrum sensing, and radar communication waveform recognition. In this paper, we propose the cutting-edge deep learning network base on Unet++ to enhance spectrum sensing for 5G New Radio (NR) and Long-Term Evolution (LTE) that incorporated by cutting edge deep learning techniques such as attention gate (AG), atrous spatial pyramid pooling (ASSP), group convolution, and skip connection. In detail, traditional convolution will be replaced by group convolution to reduce dramatically the complexity of deep network, others techniques will be applied to reach high accuracy, called WiComNet (wireless communication network) which are suitable for compact communication devices with limited resources. We utilize the spectrum generation of 5G New Radio and long-term evolution data by MatLab 5G toolbox to evaluate deep learning network. Our implementation and pre-trained model are available at:
+Spectrum sensing has a crucial role in the next generation new radio and long-term evolution network, allowing devices to identify and accommodating demand for wireless connectivity. In this paper, we address spectrum sensing challenges and introduce a innovative wireless communication network called WiComNet to tackle over-the-air communication sensing tasks. In our proposed network, which employs an architecture based on Unet, we integrate several advanced deep learning methodologies aimed at enhancing sensing performance. These include depthwise separable convolution, recurrent residual block, and atrous spatial pyramid pooling techniques, among others. Relying on simulation result, WiComNet acquired synthetic signal dataset of two wireless communication types in differenct signal-to-noise, our proposed outperformed a impressive result with high performance for spectrum sensing mission. Our implementation and pre-trained model are available at:
     \href{https://github.com/Winxkin/Spectrum_sensing_base_on_Deep_learning.git}{Spectrum sensing base on deep learning Github project}
 \end{abstract}
 
 \begin{IEEEkeywords}
-    spectrum sensing, 5G New Radio (5G NR), Long-Term Evolution (LTE), Unet, unet++, deep learning network, attention gate, group convolution, semantic image segmentation, signal processing.
+    wireless communication network (WiComNet), spectrum sensing, 5G New Radio (5G NR), Long-Term Evolution (LTE), Unet, semantic image segmentation, signal processing.
 \end{IEEEkeywords}
 
 \section{Introduction}
-The 5G New Radio (NR) is the next generation of cellular network technologies, it provides the high transmission data rage and fast transmission in kinds of different frequencies that include low-bandwidth, middle-bandwidth, and high-bandwidth \cite{b7}. In particular, low-bandwidth and middle-bandwidth are popular in many countries, 3400 to 3800 MHz in Europe, 3300 to 4990 MHz in China, 3600 MHz to 4900 MHz in Japan, 3400 MHz to 3700 MHz in Korea, and 3700 MHz to 4200 MHz in United States. The 5G NR offers the long range of frequencies than fourth Long-Term Evolution (LTE), 5G NR offers a broader spectrum range, spanning from below 1GHz up to 52.6GHz, whereas LTE typically operates within the 3.5GHz to 5GHz range.
+
+\subsection{Spectrum sensing}
+Spectrum sensing is defined as identifying the availability and non-availability of wireless communication network or radio network in a particular frequency band. When frequency allocation scheme cannot provide high data rate demand constantly, it leads to waste spectrum resources that can utilize to allocate for others such 5G new radio (NR) or long-term evolution (LTE) in the same time. Therefore, spectrum sensing for 5G NR and LTE became a main topic that have many challenges, addressing the research direction to increase effectiveness performance and utilizing limited spectrum resource. Figure 1 show the example of spectrum sensing for 5G and LTE application.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.35\textwidth]{img/Design-Overview.jpg}
+    \caption{Spectrum sensing for 5G and LTE application.}
+    \label{fig1}
+\end{figure}
+
 \\
-\indent
-In contemporary times, the demand for wireless communication network by utilizing the limited spectrum resource increased dramatically in the recent year, it requires a fast recognition for kinds of wireless radio to apply into minimal electronic devices. In the last decade, several solutions had been proposed to discriminate the type of spectrum in wireless communication network. The paper "Intelligent Spectrum Sensing with ConvNet for 5G and LTE Signals Identification”\cite{b1} introduced a innovative methodology that utilizing deep learning network which is ConvNet built by incorporating DeepLabv3+ (an efficient encode-decoder architecture for pixel-level classification) and ResNet18 (as a backbone network for feature extraction). As the result, it reached outstanding results with global accuracy 75\% and 95\% at signal-to-noise ratio 40db and 60db respectively \cite{b1}, comparing to global accuracy 78\% and 97\% at signal-to-noise ratio 40db and 60db, respectively that using the enhance DeepLabV3+, which was showed by "Accurate Spectrum Sensing with Improved DeepLabV3+ for 5G-LTE Signals Identification" \cite{b2}.
-\\
-\indent
-In the recent year, The deep learning network domain witnessed the development process of semantic segmentation, numerous robust encoder-decoder deep learning network was introduced for semantic segmentation domain that opened opportunities in image processing field, high precision together with light weight that have ability adapt to compact electronic devices, contributing to numerous applications related to Biomedical
-Image Segmentation \cite{b5}, signal processing \cite{b1} \cite{b2}, and medical Identification. To begin with a light weight semantic image segmentation deep learning network, Unet convolution network for Biomedical image segmentation was presented by Computer Science Department and BIOSS Center for Biological Signaling Studies, University of Freiburg, Germany in 2015 \cite{b5}. Unet was built by multiple scale convolution networks including two path encoder and decoder from high-scale to small-scale image and small-scale image to high-scale image connected to encoder path and decoder path respectively. In 2020, Unet++ is a redesigning skip connection to exploit multiple scales features in image segmentation that was presented by Zongwei Zhou \cite{b6}. Unet++ offered a higher accuracy than traditional Unet network by utilizing skip connection in each layer, the space between layers was replaced by deep convolution blocks that aim increase features extraction in the output of the network. However, these lead to increase the size of the network dramatically, the total parameters of Unet++ increased approximately fourth times comparing to traditional Unet network. \cite{b6}.
-\\
-\indent
-In this paper, we presented innovative methodologies to enhance Unet++ deep learning network to tackle spectrum sensing 5G New Radio (NR) and Long-Term Evolution (LTE) base on received spectrum in frequency domain by the discrete Fourier transform. To begin with, we utilize group convolutions \cite{b9} to reduce dramatically the complexity of deep network, it not only has vital role in reducing the total of parameters but also retain a robust accuracy. On the other hand, attention mechanism was introduce in "Attention Is All You Need" \cite{b4}, which created a renovation in the deep learning domain in general and semantic image segmentation in specific. In particular, Attention mechanism focus on the mainly regions in the image where need to discriminate segment of objects. Therefore, attention blocks have a light weight which plays a vital role for development deep learning network in compact power devices, especially in signal processing where numerous applications were deployed in smartphones, laptops, and others to discriminate the type of received signals that requires minimum computing performance. Thank to attention mechanism, the attention gate mechanism was introduced in "Attention U-Net: Learning Where to Look for the Pancreas" \cite{b3} by Biomedical Image Analysis Group, Imperial College London, London, UK in 2008, which enhances the discriminated ability of Unet network. In detail, attention gates adapted to skip connection in each layer of Unet network, it filter the features propagated through the skip connections \cite{b3}. The achievement of attention gates is focusing on extracted features in the same size at the corresponding layer, incorporating skip connections and lower layers by concatenation. On the other hand, atrous spatial pyramid pooling was introduce in "Modified UNet++ with atrous spatial pyramid pooling for blood cell image segmentation" \cite{b10}, by using four parallel dilated convolution in majority scale sizes that improve general learning capacity of deep network. As the result, our innovative techniques showed effectively in waveform recognition tasks, WiComnet reach impressively spectrum recognition precision while reducing significantly the complexity. In Summary, we utilized incorporated attention gates, group convolution, and atrous spatial pyramid pooling \cite{b10} to reduce the size of the Unet++ network and rise the accuracy through attention gates that adapted to skip connection layers to tackle spectrum sensing for the 5G New Radio (NR) and the Long-term Evolution (LTE) base on received spectrum signals. Our objectives present a new innovative deep learning network base on Unet++ architecture that reduces dramatically complexity and reaches high accuracy
+\indent 
+In the past, numerous sensing techniques were showed in \cite{YucekSpectrumSensing}, using sensing algorithms, Multi-Dimensional spectrum sensing, channel estimation, and cooperative sensing. Nevertheless, spectrum sensing task met a big challenging in hardware requirements \cite{YucekSpectrumSensing}, this task requires high sampling rates, high resolution analog to digital converters (ADC) with large dynamic range, and high performance of processor. On the other hand, Cognitive wireless communication can be identified immediately by sensing duration and frequency. However, this method trades off between performance and sensing algorithms. Since their introduction, researches spent efforts to tackle improved spectrum sensing problems, addressing various challenges and introducing innovative solutions to increase prediction ratio and performance in cognitive wireless communication network. Furthermore, prominent surveys on this topic were introduced in \cite{kumar2024analysis}, \cite{YucekSpectrumSensing}, \cite{ali2016advances}, and \cite{liyanaarachchi2021optimized}.
+
+
+\subsection{Related work}
+In recent years, many works on cognitive wireless communication and radio network  were introduced to enhance sensing performance. In general, energy detector based sensing is common way of spectrum sensing because it offers low computational and implementation complexities, waveform base sensing increases sensing performance, cyclostationarity based sensing for detecting and matching filtering  primary user transmissions \cite{YucekSpectrumSensing}. On the other hand, several innovative deep learning (DL) methods were presented to tackle spectrum sensing performance. Applying convolution neural network for improved waveform classification \cite{huynh2024improved}, the work \cite{huynhthe2023intelligence} introduced innovative DL architecture to improve the spectrum sensing prediction ratio for 5G and LTE signals. Other works utilized deeplabv3+ \cite{nguyen2023accurate} and DetectNet \cite{gao2019deep} to increase accuracy for spectrum sensing task. Nevertheless, while sensing algorithms have a trades-off between hardware performance and computation complexities, DL models offer higher parameters to reach a high level of precision that requires considerable hardware resources.
+
+\subsection{Contribution}
+In this work, we utilize DL methods to tackle sensing tasks and propose a innovative DL architecture based on Unet called wireless communication network (WiComNet), which reduces significantly complexity and enhances sensing performance for 5G and LTE signals. Unet was a fully convolutional network \cite{ronneberger2015u} using special for semantic segmentation images, it was designed with parallel encoder-decoder and connecting each layer by skip connection. Furthermore, Unetpp and other variant models were showed by the authors \cite{zhou2019unet++} that improve dramatically prediction ratio for image segmentation tasks. Nevertheless, the drawback of these models is that they offer significantly complexities and require considerable hardware resources. In term of decreasing complexities, we presented a WiComNet architecture that incorporated depthwise separable convolution \cite{CholletXception} and recurrent residual convolution \cite{AlomNuclei} \cite{he2016deep} \cite{aghalari2021brain}, replacing for Unet blocks in each layer of encoder and decoder paths. On the other hand, atrous pyramid spatial pooling modules \cite{ChenAtrous} were adapted between encoder and decoder paths that enhanced features extraction in multiple scales. In summary, we make the following two main contributions:
+\begin{itemize}
+\item[1.] Addressing spectrum sensing for 5G and LTE problems and utilizing DL methods to tackle spectrum sensing tasks.
+\item[2.] Introduction a innovative WiComNet architecture based on Unet that reduces significant complexities and enhances sensing performance for 5G and LTE signals.
+\end{itemize}
+
+
 
 \section{Methodology}
 
-\subsection{Spectrum sensing system overview}
-In this work, we focus on how to present an efficient spectrum sensing to identify the 5G New Radio (NR) and the long-term evolution (LTE) utilizing deep learning network. To begin with, received spectrum image for 5G NR, LTE, and noise are generated by MatLab 5G toolbox. We utilize the characteristic of semantic image segmentation that was introduced in numerous previous studies to discriminate the 5G NR and LTE signal using received spectrum in frequency domain. the discrimination in frequency and time of 5G NR and LTE signal takes place in the physical layer in the wireless communication network system. The figure 1 bellow depict the overall of our application that the received signal is corrected by compact devices, it is responsibility for transforming raw signal to spectrum in frequency domain using Fourier transform. these outputs are passed to deep learning network to classify the type of received signals. In the end, the objective of this application is to build a light weight network that is suitable for communication devices to respond in real-time.
-%% figure 1 Overview spectrum sensing application
 
-\subsection{Unet++ deep learning network}
-Unet++ deep learning network \cite{b6} is improved version that is inspired by traditional Unet network, it is a light weight encoder and decoder model that provide ability to predict in multiple scales. The main of Unet++ make it reaches higher accuracy than traditional Unet network that inserts more convolution blocks into blank space at layers \cite{b6}, all of outputs are synthetic at each block by skip connection layers and lower layers that extract more features comparing to Unet network. Nevertheless, the drawback of this methodology increase the total parameters effectively, it was ten times comparing to Unet network and it is not suitable to adapt to compact communication devices. In our research, we decreased significantly the total parameters of Unet++ by replacing traditional convolutions with group convolutions. Furthermore, to increase the extraction feature ability of Unet++ netwrok, we adapt attention gate \cite{b3} to before each convolution blocks and atrous spatial pyramid pooling \cite{b10} in the latest layer to enhance prediction ratio in image semantic segmentation.
+\subsection{Signal processing}
+Nowadays, over-the-air communication systems have a vital role in diverse scenarios and applications \cite{lin20215g}. This work mainly considers about 5G NR and LTE communication systems. In practical terms, received signals (RX signal) from different sources in figure \ref{fig1} can be defined by formula (\ref{eq:rxsig}), where \( y(t) \) denotes for the RX signal, \( x(t) \) is the transmitted signal (TX signal), the channel response \(h(t)\), and \(n(t)\) presents for the addition of noise. 
+\begin{equation}
+    y(t) = (x(t) *\footnote{\label{Convop}*: denotes for convolution operation} h(t)) + n(t)
+    \label{eq:rxsig}
+\end{equation}
 
-\subsection{Group convolution}
-Group convolution is primary technique that reduce dramatically the total parameters of the deep learning network \cite{b9}. The input and output are divided into multiple groups, each group has its own filters with the input data independently. the total parameters of group convolutions reduces significantly by decreasing the number of features in each group and extending the amount of groups in a group convolution bock.
+\indent Short-time Fourier transformer (STFT) is a widely used signal processing technique for analyzing the frequency content of a signal over time. The RX signal (\ref{eq:rxsig}) can be presented in frequency domain by STFT function that is defined in (\ref{eq:spectrogram}). In detail, \( Y(f, t)\) represents for the spectrum of the RX signal at frequency \(f\) and time \(t\), \(y(t)\) is the input RX signal, \(w(t - \tau)\) denotes for the window function using for segmenting the signal into short frames. Furthermore, the energy spectrum is illustrated by the equation (\ref{eq:energy}), with \(E(t)\) denotes for energy spectrum at time \(t\).
 
-\begin{figure}[H]
+\begin{equation}
+    Y(f, t) = \int_{-\infty}^{\infty} y(\tau) \cdot w(t - \tau) \cdot e^{-j2\pi f \tau} \, d\tau 
+    \label{eq:spectrogram}
+\end{equation}
+\begin{equation}
+    E(t) = \sum_{f} \left| Y(f, t) \right|^2 
+    \label{eq:energy}
+\end{equation}
+
+
+\indent The signal-to-noise (SNR) in both 5G and LTE systems can be calculated by comparing the power of the signal to the power of the noise. In wireless communication systems, SNR is typically defined as the ratio of the average received signal power to the average noise power over a specified bandwidth. In over-the-air communication systems, the signal power depends on factors such as the transmitted power, path loss, antenna gains, and fading effects. We define \(P_{\text{signal}}\) as signal power of RX 5G and LTE signals, it is demonstrated by formula (\ref{eq:Psig}) with \(P_{\text{tx}}\) is the transmitted power (TX power) and \(G\) denotes for the channel gain respectively. On the other hand, the noise power \(P_{\text{noise}}\) in (\ref{eq:Pnoise}) can be effected by thermal noise power \(P_{\text{thermal}}\), atmospheric noise \(P_{\text{atmospheric}}\) , and powers are generated from inter-symbols \(P_{\text{ISI}}\), co-channel \(P_{\text{CCI}}\), adjacent channel \(P_{\text{ACI}}\) interference respectively. 
+
+\begin{equation}
+    P_{\text{signal}} = P_{\text{tx}} \cdot G   
+    \label{eq:Psig}
+\end{equation}
+\begin{equation}
+    P_{\text{noise}} = P_{\text{thermal}} + P_{\text{ISI}} + P_{\text{CCI}} + P_{\text{ACI}} + P_{\text{atmospheric}}   
+    \label{eq:Pnoise}
+\end{equation}
+
+\indent SNR formulas can be defined in (\ref{eq:SNR}) and (\ref{eq:SNRdb}). While \(SNR\) denotes the SNR ratio between \(P_{\text{signal}}\) and \(P_{\text{noise}}\), \(SNR_{\text{dB}}\) expresses the SNR ratio in decibels (dB).
+
+\begin{equation}
+    SNR = \frac{P_{\text{signal}}}{P_{\text{noise}}}    
+    \label{eq:SNR}
+\end{equation}
+
+\begin{equation}
+    SNR_{\text{dB}} = 10 \cdot \log_{10} \left( \frac{P_{\text{signal}}}{P_{\text{noise}}} \right)
+    \label{eq:SNRdb}
+\end{equation}
+
+\indent There are several generation spectrum samples in figure \ref{fig2} that present for 5G NR, LTE, and overlapping 5G and LTE respectively.
+
+\begin{figure}[h]
     \centering
-    \includegraphics[width=0.4\textwidth]{img/fig_groupconv.png}
-    \caption{Example for the group convolution.}
-    \label{fig}
+    \footnotesize
+    \begin{tabular}{ccc}
+        \includegraphics[width=0.14\textwidth]{img/LTE_frame_0.png} & \includegraphics[width=0.14\textwidth]{img/NR_frame_1506.png} &
+        \includegraphics[width=0.14\textwidth]{img/LTE_NR_frame_0.png} & \\
+        a) & b) & c)
+    \end{tabular}
+    \caption{spectrum samples: a) spectrum sample for LTE, b) spectrum sample for 5G NR, c) spectrum sample for overlapping 5G NR and LTE}
+    \label{fig2}
 \end{figure}
 
-\indent
-The equation of a group convolution is showed by:
+\subsection{WiComNet: robust and cost-efficient convolution network}
+In this work, we propose the WiComNet that is a robust and cost-efficient convolution network (convnet) utilizing Unet-based architecture \cite{ronneberger2015u}. In general, this work utilizes depthwise separable convolutions (DSC) \cite{CholletXception} as convolution operation that replace for traditional convolutions. DSC uses inoperative depthwise convolution and pointwise convolution to reduce significantly the number of convolution operators. The detail of DSC can be illustrated in formula (\ref{eq:Fdsc}). Where \(F_{\text{DSC}}(f)\) denotes for the output of DSC convolution operation with the number of features extraction \(f\) , \(Dwconv(3\times3,1)_{\text{BN}}\) represents for depthwise convolution and batch normalization active function, it is connected directly by \(Conv(1\times1,f)_{\text{Relu}}\).
 
-\[
-\begin{aligned}
-Y_{g, c} &= \sum_{c' = 0}^{C_{\text{in}} / G - 1} \sum_{i=0}^{K-1} \sum_{j=0}^{K-1} (X_{g \cdot (C_{\text{in}} / G) + c', h+i, w+j} \cdot W_{g, c, i, j} + b_{g, c})
-\label{eq:convolution_equation}
-\\
-\text{(1)}
-\end{aligned}
-\]
+\begin{equation}
+    F_{\text{DSC}}(f) = Dwconv(3\times3,1)_{\text{BN}} * Conv(1\times1,f)_{\text{Relu}}
+    \label{eq:Fdsc}
+\end{equation}
 
-\indent
- Where:
-\begin{itemize}
-    \item $Y_{g,c}$: is the output at position $(g,c)$ in the $g$th group.
-    \item $X_{g \cdot (C_{\text{in}} / G) + c', h+i, w+j}$: is the input activation at the corresponding position.
-    \item $W_{g, c, i, j}$: is the weight of the convolution filter at position $(g, c, i, j)$.
-    \item $b_{g, c}$: is the bias term associated with the output channel $c$ in the $g$th group.
-    \item $H_{\text{out}}$, $W_{\text{out}}$: are the height and width of the output feature map, respectively.
-\end{itemize}
+\indent On the other hand, this work applies atrous spatial pyramind pooling (ASPP) modules \cite{ChenAtrous} between encoder and decoder paths of WiComNet to enhance the ability of feature extraction in multiple scales. ASPP modules incorporate parallel four convolution layers, which include a \(1\times1\) convolution layer and three \(3\times3\) convolution layers in difference dilatation rates. The output of ASPP module is synthetic by a concatenation layer. The figure \ref{fig3} depicts ASPP module with \(r_1, r_2, r_3)\) represent for dilatation rates of three \(3\times3\) convolution layers. 
 
-
-\subsection{Attention gate}
-The attention gate is introduced by Ozan Oktay \cite{b3} that adapts to Unet network. The attention gate is inspired by attention mechanism \cite{b4} to enhance significantly image segmentation tasks. Our proposal design will insert attention gates into each skip connection layers of Unet++ network. Spatial region are selected by analysing both activation functions and contextual information which were provided by gating signal from lower layers, feature maps are extracted in multiple scales and merged through skip connections, all of them combine coarse and dense prediction in the output layer. Furthermore, the Unet++ network offers convolution blocks in each skip connection lines that combine with the input from lower layers by concatenation layers. As the result, we propose a method that adapt attention gates into each internal skip connection convolution blocks that enhance dramatically feature extraction abilities at each node. The attention gate architecture will be depicted in Figure 2.
-
-\begin{figure}[H]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.48\textwidth]{img/Attention_gate.jpg}
-    \caption{Attention gate architecture.}
-    \label{fig}
+    \includegraphics[width=0.35\textwidth]{img/Design-ASPP.jpg}
+    \caption{Atrous spatial pyramid pooling module}
+    \label{fig3}
 \end{figure}
 
-\indent
-The output layer equation of a attention gate is illustrated by:
+\indent The output of ASPP module can be calculated by (\ref{eq:ASPP}). Where \(F_{\text{ASPP}}(f, r_1, r_2, r_3)\) illustrates for the output of ASPP module, while \(r_1, r_2, r_3\) represents for dilatation rates, \(f\) indicates for the number of input features. Furthermore, \(F_{\text{Concat}}\) denotes for the output of concatenation operation and \(Conv\) denotes for convolution layers respectively.
 
-\[
+\begin{equation}
 \begin{aligned}
-O &= SC \cdot LL \cdot (SIG(C_{1x1x1}\cdot R(W_{g} + W_{x})) \cdot C_{1x1xF})
-\label{eq:AG_equation}
-\\
-\text{(2)}
+    F_{\text{ASPP}}(f,r_1,r_2,r_3) = F_{\text{Concat}}\left( Conv(1 \times 1, f),\\ 
+    Conv(3 \times 3,f,r_1),   \\
+    Conv(3 \times 3,f,r_2),  \\
+    Conv(3 \times 3,f,r_3) \right))
+    \label{eq:ASPP}
 \end{aligned}
-\]
-
-\indent
-Where:
-\begin{itemize}
-    \item $O$: the output layer.
-    \item $SC$: the input layer from skip connection.
-    \item $LL$: the the input of lower layer.
-    \item $SIG()$: represent for the Sigmod function.
-    \item $R$: The represent for the Relu function.
-    \item $C_{HxWxF}$: Convolution layer with $H$, $W$, and $F$ is the height, weight, and features.
-\end{itemize}
-
-\subsection{Atrous spatial pyramid pooling}
-In deep learning network, convolution often uses for filter extraction. However, in case of the number of convolution is too big, it leads to high complexity and weight. Atrous spatial pyramid pooling (ASSP) \cite{b10} was introduce by using parallel dilated convolutions in difference scales, it aims increasing general learning ability of deep network but retaining significantly the complexity of deep network. In general, the basic ASSP usually conducts with three 3x3 dilated convolution kernels which have dilated scale 1, 2, and 3 respectively. The ASSP module mainly combine four convolutions which include three multiple scale 3x3 dilated convolution kernels and a 1x1 convolution kernel, all of them will be concatenated at the output of ASSP module.
-
-%% figure illustration
-
-\subsection{Training data}
-In this paper, we utilize generating 5G NR, LTE, 5G NR combined LTE and noise spectrum data images from Matlab 5G tool box, it provides generating data with variable signal to noise ratio (SNR) range, which defines as the ratio of the power of the signal to the power of the noise. First of all, we generate the training data which contains approximately 5k sub-frame in each class with the image size is 128x128 and SNR range is lower than 30db that aim optimizing calculation performance of our network. The 5G NR and LTE are distinguished by spectrum frequencies and bandwidth through Fourier transformer algorithm. The signal in high frequencies spectrum may be predicted 5G NR. By the contrast, it is predicted LTE or Noise if the spectrum frequency is unknown. There are several sample that depict for 5G NR, LTE, and noise respectively bellow.
+\end{equation}
 
 
-\section{Proposal Wireless Communication Network base on Unet++ architecture}
-In this paper, we introduce a new innovative deep learning network called Wireless Communication Network (WiComNet) base on Unet++ deep learning network \cite{b6}, which is adapted by group convolution, attention gates, and atrous spatial pyramid pooling. Group convolution is applied to reduce significantly the complexity of Unet++ deep network, we divide 32 filter in a unit group convolution and double the number of group in each group convolution layer that corresponds to original Unet++ network respectively. Therefore, we not only obtain double filter in each convolution layer but also reduce complexity dramatically by applying group convolution. On the other hand, attention gates are adapted at multiple layers in decoder path that aim improving attention region in image semantic segmentation task, attention gates are combined by skip connection layers and lower layers, it retains more filter extraction and focuses on region border that help increase prediction ability of Wireless Communication Network. Furthermore, atrous spatial pyramid pooling is adapted in the latest layer with cascade hierarchical connection \cite{b11} that include four parallel convolution kernels (one 1x1 convolution and three dilated convolutions in multiple scale sizes) with 1, 2, and 3 dilated scale sizes in the first layer and 2, 6, and 5 in the second layer respectively, the concatenations are used to combine filter extractions in each layer. Additional, all layers in the encoder path are connected directly to ASSP module by skip connection that improve the number of input feature at the latest layer.
+\indent Inspired by the architectural innovation of the Recurrent Residual Block (RRB) as proposed in \cite{aghalari2021brain} and \cite{he2016deep}, we have revolutionized our network design. Specifically, we have overhauled both the encoder and decoder paths of our network by substituting the conventional Unet convolution blocks with RRB blocks. In WiComNet architecture, the output of each RRB block is seamlessly integrated with a cascade of DSC blocks, augmented by a residual path. This augmentation significantly amplifies the richness and complexity of the feature representation captured by our network, it is showed by figure \ref{fig4}. The formula (\ref{eq:RRB}) illustrates for the output of RRB block, \(F_{\text{add}}\) denotes for addition operation between both input \(F_{\text{in}}(f)\) and \(Conv(1\times1,f)\) from previous layer, in which \(F_{\text{in}}(f)\) is the result of previous layer, \(Conv(1\times1,f)\) and \(f\) are convolution layer and the number of input features respectively.
 
-\section{Simulation result and evaluation}
+
+\begin{equation}
+\begin{aligned}
+    F_{\text{RRB}}(f) = F_{\text{add}}\left( F_{\text{in}}(f), Conv(1\times1,f)
+    \label{eq:RRB}
+\end{aligned}
+\end{equation}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.35\textwidth]{img/Design-WiComNetB.jpg}
+    \caption{Wireless communication network}
+    \label{fig4}
+\end{figure}
+
+
+\indent The figure \ref{fig4} depicts for WiComNet architecture that was redesigned by Unet-based architecture \cite{ronneberger2015u}. The WiComNet architecture comprises five layers each for the encoder and decoder paths, ASPP modules are integrated into skip connection paths across multiple layers to enhance feature extraction across various scales. Our proposing design offers lowest complexity comparing to original Unet architecture, and other variants. The table \ref{tab1} compares complexities among our design with other architectures.
+
+\begin{table}[!htbp]
+\centering
+\caption{Network complexity comparision}
+\label{tab1}
+\begin{tabular}{|c|c|c|}
+\toprule
+\hline
+\textbf{Network} & \textbf{No. Layers} & \textbf{No. Params} \\
+\hline
+WiComNet & 125 & \textbf{7.8M} \\
+\hline
+ConvNet & 100 & 20.6M \\
+\hline
+Deeplabv3 & 100 & 20.6M  \\
+\hline
+Unet & 59 & 31.3M \\
+\hline
+Unetp & 101 & 42.5M  \\
+\hline
+UnetE & 101 & 42.3M \\
+\hline
+Unetpp & 101 & 43.5M  \\
+\hline
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+\section{Evaluation result}
+\subsection{Dataset and training resource}
+
+\subsection{WiComNet evaluation result}
 
 \section{Conclusion}
 
-\section{Prepare Your Paper Before Styling}
-Before you begin to format your paper, first write and save the content as a
-separate text file. Complete all content and organizational editing before
-formatting. Please note sections \ref{AA}--\ref{SCM} below for more information on
-proofreading, spelling and grammar.
 
-Keep your text and graphic files separate until after the text has been
-formatted and styled. Do not number text heads---{\LaTeX} will do that
-for you.
 
-\subsection{Abbreviations and Acronyms}\label{AA}
-Define abbreviations and acronyms the first time they are used in the text,
-even after they have been defined in the abstract. Abbreviations such as
-IEEE, SI, MKS, CGS, ac, dc, and rms do not have to be defined. Do not use
-abbreviations in the title or heads unless they are unavoidable.
-
-\subsection{Units}
-\begin{itemize}
-    \item Use either SI (MKS) or CGS as primary units. (SI units are encouraged.) English units may be used as secondary units (in parentheses). An exception would be the use of English units as identifiers in trade, such as ``3.5-inch disk drive''.
-    \item Avoid combining SI and CGS units, such as current in amperes and magnetic field in oersteds. This often leads to confusion because equations do not balance dimensionally. If you must use mixed units, clearly state the units for each quantity that you use in an equation.
-    \item Do not mix complete spellings and abbreviations of units: ``Wb/m\textsuperscript{2}'' or ``webers per square meter'', not ``webers/m\textsuperscript{2}''. Spell out units when they appear in text: ``. . . a few henries'', not ``. . . a few H''.
-    \item Use a zero before decimal points: ``0.25'', not ``.25''. Use ``cm\textsuperscript{3}'', not ``cc''.)
-\end{itemize}
-
-\subsection{Equations}
-Number equations consecutively. To make your
-equations more compact, you may use the solidus (~/~), the exp function, or
-appropriate exponents. Italicize Roman symbols for quantities and variables,
-but not Greek symbols. Use a long dash rather than a hyphen for a minus
-sign. Punctuate equations with commas or periods when they are part of a
-sentence, as in:
-\begin{equation}
-    a+b=\gamma\label{eq}
-\end{equation}
-
-Be sure that the
-symbols in your equation have been defined before or immediately following
-the equation. Use ``\eqref{eq}'', not ``Eq.~\eqref{eq}'' or ``equation \eqref{eq}'', except at
-the beginning of a sentence: ``Equation \eqref{eq} is . . .''
-
-\subsection{\LaTeX-Specific Advice}
-
-Please use ``soft'' (e.g., \verb|\eqref{Eq}|) cross references instead
-of ``hard'' references (e.g., \verb|(1)|). That will make it possible
-to combine sections, add equations, or change the order of figures or
-citations without having to go through the file line by line.
-
-Please don't use the \verb|{eqnarray}| equation environment. Use
-\verb|{align}| or \verb|{IEEEeqnarray}| instead. The \verb|{eqnarray}|
-environment leaves unsightly spaces around relation symbols.
-
-Please note that the \verb|{subequations}| environment in {\LaTeX}
-will increment the main equation counter even when there are no
-equation numbers displayed. If you forget that, you might write an
-article in which the equation numbers skip from (17) to (20), causing
-the copy editors to wonder if you've discovered a new method of
-counting.
-
-    {\BibTeX} does not work by magic. It doesn't get the bibliographic
-data from thin air but from .bib files. If you use {\BibTeX} to produce a
-bibliography you must send the .bib files.
-
-    {\LaTeX} can't read your mind. If you assign the same label to a
-subsubsection and a table, you might find that Table I has been cross
-referenced as Table IV-B3.
-
-{\LaTeX} does not have precognitive abilities. If you put a
-\verb|\label| command before the command that updates the counter it's
-supposed to be using, the label will pick up the last counter to be
-cross referenced instead. In particular, a \verb|\label| command
-should not go before the caption of a figure or a table.
-
-Do not use \verb|\nonumber| inside the \verb|{array}| environment. It
-will not stop equation numbers inside \verb|{array}| (there won't be
-any anyway) and it might stop a wanted equation number in the
-surrounding equation.
-
-\subsection{Some Common Mistakes}\label{SCM}
-\begin{itemize}
-    \item The word ``data'' is plural, not singular.
-    \item The subscript for the permeability of vacuum $\mu_{0}$, and other common scientific constants, is zero with subscript formatting, not a lowercase letter ``o''.
-    \item In American English, commas, semicolons, periods, question and exclamation marks are located within quotation marks only when a complete thought or name is cited, such as a title or full quotation. When quotation marks are used, instead of a bold or italic typeface, to highlight a word or phrase, punctuation should appear outside of the quotation marks. A parenthetical phrase or statement at the end of a sentence is punctuated outside of the closing parenthesis (like this). (A parenthetical sentence is punctuated within the parentheses.)
-    \item A graph within a graph is an ``inset'', not an ``insert''. The word alternatively is preferred to the word ``alternately'' (unless you really mean something that alternates).
-    \item Do not use the word ``essentially'' to mean ``approximately'' or ``effectively''.
-    \item In your paper title, if the words ``that uses'' can accurately replace the word ``using'', capitalize the ``u''; if not, keep using lower-cased.
-    \item Be aware of the different meanings of the homophones ``affect'' and ``effect'', ``complement'' and ``compliment'', ``discreet'' and ``discrete'', ``principal'' and ``principle''.
-    \item Do not confuse ``imply'' and ``infer''.
-    \item The prefix ``non'' is not a word; it should be joined to the word it modifies, usually without a hyphen.
-    \item There is no period after the ``et'' in the Latin abbreviation ``et al.''.
-    \item The abbreviation ``i.e.'' means ``that is'', and the abbreviation ``e.g.'' means ``for example''.
-\end{itemize}
-An excellent style manual for science writers is \cite{b7}.
-
-\subsection{Authors and Affiliations}
-\textbf{The class file is designed for, but not limited to, six authors.} A
-minimum of one author is required for all conference articles. Author names
-should be listed starting from left to right and then moving down to the
-next line. This is the author sequence that will be used in future citations
-and by indexing services. Names should not be listed in columns nor group by
-affiliation. Please keep your affiliations as succinct as possible (for
-example, do not differentiate among departments of the same organization).
-
-\subsection{Identify the Headings}
-Headings, or heads, are organizational devices that guide the reader through
-your paper. There are two types: component heads and text heads.
-
-Component heads identify the different components of your paper and are not
-topically subordinate to each other. Examples include Acknowledgments and
-References and, for these, the correct style to use is ``Heading 5''. Use
-``figure caption'' for your Figure captions, and ``table head'' for your
-table title. Run-in heads, such as ``Abstract'', will require you to apply a
-style (in this case, italic) in addition to the style provided by the drop
-down menu to differentiate the head from the text.
-
-Text heads organize the topics on a relational, hierarchical basis. For
-example, the paper title is the primary text head because all subsequent
-material relates and elaborates on this one topic. If there are two or more
-sub-topics, the next level head (uppercase Roman numerals) should be used
-and, conversely, if there are not at least two sub-topics, then no subheads
-should be introduced.
-
-\subsection{Figures and Tables}
-\paragraph{Positioning Figures and Tables} Place figures and tables at the top and
-bottom of columns. Avoid placing them in the middle of columns. Large
-figures and tables may span across both columns. Figure captions should be
-below the figures; table heads should appear above the tables. Insert
-figures and tables after they are cited in the text. Use the abbreviation
-``Fig.~\ref{fig}'', even at the beginning of a sentence.
-
-\begin{table}[htbp]
-    \caption{Table Type Styles}
-    \begin{center}
-        \begin{tabular}{|c|c|c|c|}
-            \hline
-            \textbf{Table} & \multicolumn{3}{|c|}{\textbf{Table Column Head}}                                                         \\
-            \cline{2-4}
-            \textbf{Head}  & \textbf{\textit{Table column subhead}}           & \textbf{\textit{Subhead}} & \textbf{\textit{Subhead}} \\
-            \hline
-            copy           & More table copy$^{\mathrm{a}}$                   &                           &                           \\
-            \hline
-            \multicolumn{4}{l}{$^{\mathrm{a}}$Sample of a Table footnote.}
-        \end{tabular}
-        \label{tab1}
-    \end{center}
-\end{table}
-
-\begin{figure}[htbp]
-    \centerline{\includegraphics{fig1.png}}
-    \caption{Example of a figure caption.}
-    \label{fig}
-\end{figure}
-
-Figure Labels: Use 8 point Times New Roman for Figure labels. Use words
-rather than symbols or abbreviations when writing Figure axis labels to
-avoid confusing the reader. As an example, write the quantity
-``Magnetization'', or ``Magnetization, M'', not just ``M''. If including
-units in the label, present them within parentheses. Do not label axes only
-with units. In the example, write ``Magnetization (A/m)'' or ``Magnetization
-\{A[m(1)]\}'', not just ``A/m''. Do not label axes with a ratio of
-quantities and units. For example, write ``Temperature (K)'', not
-``Temperature/K''.
-
-\section*{Acknowledgment}
-
-The preferred spelling of the word ``acknowledgment'' in America is without
-an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B.
-G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor
-acknowledgments in the unnumbered footnote on the first page.
-
-\section*{References}
-
-Please number citations consecutively within brackets \cite{b1}. The
-sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference
-number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at
-the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
-
-Number footnotes separately in superscripts. Place the actual footnote at
-the bottom of the column in which it was cited. Do not put footnotes in the
-abstract or reference list. Use letters for table footnotes.
-
-Unless there are six authors or more give all authors' names; do not use
-``et al.''. Papers that have not been published, even if they have been
-submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers
-that have been accepted for publication should be cited as ``in press'' \cite{b5}.
-Capitalize only the first word in a paper title, except for proper nouns and
-element symbols.
-
-For papers published in translation journals, please give the English
-citation first, followed by the original foreign-language citation \cite{b6}.
-
-\begin{thebibliography}{00}
-    \bibitem{b1} {Huynh-The, Thien, et al. "Intelligent Spectrum Sensing with ConvNet for 5G and LTE Signals Identification." 2023 IEEE Statistical Signal Processing Workshop (SSP). IEEE, 2023.}
-    \bibitem{b2} {Nguyen, Gia-Vuong, Ca Van Phan, and Thien Huynh-The. "Accurate Spectrum Sensing with Improved DeepLabV3+ for 5G-LTE Signals Identification." Proceedings of the 12th International Symposium on Information and Communication Technology. 2023.}
-    \bibitem{b3} {Oktay, Ozan, et al. "Attention u-net: Learning where to look for the pancreas." arXiv preprint arXiv:1804.03999 (2018).}
-    \bibitem{b4} {Vaswani, Ashish, et al. "Attention is all you need." Advances in neural information processing systems 30 (2017).}
-    \bibitem{b5} {Ronneberger, Olaf, Philipp Fischer, and Thomas Brox. "U-net: Convolutional networks for biomedical image segmentation." Medical image computing and computer-assisted intervention–MICCAI 2015: 18th international conference, Munich, Germany, October 5-9, 2015, proceedings, part III 18. Springer International Publishing, 2015.}
-    \bibitem{b6} {Zhou, Zongwei, et al. "Unet++: Redesigning skip connections to exploit multiscale features in image segmentation." IEEE transactions on medical imaging 39.6 (2019): 1856-1867.}
-    \bibitem{b7} {Pirinen, Pekka. "A brief overview of 5G research activities." 1st International Conference on 5G for Ubiquitous Connectivity. IEEE, 2014.}
-    \bibitem{b8} {Lin, Xingqin, and Namyoon Lee. "5G and Beyond." Cham, Switzerland: Springer Nature Switzerland AG (2021).}
-    \bibitem{b9} {Krizhevsky, Alex, Ilya Sutskever, and Geoffrey E. Hinton. "Imagenet classification with deep convolutional neural networks." Advances in neural information processing systems 25 (2012).}
-    \bibitem{b10} {Lan, K., Cheng, J., Jiang, J., Jiang, X., & Zhang, Q. (2023). Modified UNet++ with atrous spatial pyramid pooling for blood cell image segmentation. Mathematical biosciences and engineering: MBE, 20(1), 1420-1433.}
-    \bibitem{b11}{Lian, X., Pang, Y., Han, J., & Pan, J. (2021). Cascaded hierarchical atrous spatial pyramid pooling module for semantic segmentation. Pattern Recognition, 110, 107622.}
-    
-\end{thebibliography}
-\vspace{12pt}
-\color{red}
-IEEE conference templates contain guidance text for composing and formatting conference papers. Please ensure that all template text is removed from your conference paper prior to submission to the conference. Failure to remove the template text from your paper may result in your paper not being published.
+\bibliographystyle{IEEEtran}
+\bibliography{reference}
 
 \end{document}
+
+
