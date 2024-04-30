@@ -13,6 +13,7 @@
 \usepackage{float} % To use [H] for figure placement
 \graphicspath{{img/}}
 
+
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
@@ -26,7 +27,7 @@
 
 \author{%%%% author names
     \IEEEauthorblockN{\textsuperscript{1} Huan Nguyen-Duy}% first author
-    , \IEEEauthorblockN{\textsuperscript{2} Dr.Thien Huynh-The}% delete this line if not needed
+    , \IEEEauthorblockN{\textsuperscript{2} Thien Huynh-The}% delete this line if not needed
     %, \IEEEauthorblockN{\textsuperscript{} who ?}% delete this line if not needed
     % duplicate the line above as many times as needed to list all authors
     \\%%%% author affiliations
@@ -41,39 +42,39 @@
 \maketitle
 
 \begin{abstract}
-Spectrum sensing has a crucial role in the next generation new radio and long-term evolution network, allowing devices to identify and accommodating demand for wireless connectivity. In this paper, we address spectrum sensing challenges and introduce a innovative wireless communication network called WiComNet to tackle over-the-air communication sensing tasks. In our proposed network, which employs an architecture based on Unet, we integrate several advanced deep learning methodologies aimed at enhancing sensing performance. These include depthwise separable convolution, recurrent residual block, and atrous spatial pyramid pooling techniques, among others. Relying on simulation result, WiComNet acquired synthetic signal dataset of two wireless communication types in differenct signal-to-noise, our proposed outperformed a impressive result with high performance for spectrum sensing mission. Our implementation and pre-trained model are available at:
+Spectrum sensing has a crucial role in the next generation new radio and long-term evolution network, allowing devices to identify and accommodate demand for wireless connectivity. In this paper, we addressed spectrum sensing challenges and introduced a innovative wireless communication network called WiComNet to tackle over-the-air communication sensing tasks. In our proposed network, which employed an architecture based on Unet, we integrated several advanced deep learning methodologies aimed at enhancing sensing performance. These included depthwise separable convolution, recurrent residual block, and atrous spatial pyramid pooling techniques, among others. Relying on simulation results, WiComNet acquired synthetic signal dataset of two wireless communication types in differenct signal-to-noise, our proposed outperformed a impressive result with high performance for spectrum sensing missions. Our implementation and pre-trained model were available at:
     \href{https://github.com/Winxkin/Spectrum_sensing_base_on_Deep_learning.git}{Spectrum sensing base on deep learning Github project}
 \end{abstract}
 
 \begin{IEEEkeywords}
-    wireless communication network (WiComNet), spectrum sensing, 5G New Radio (5G NR), Long-Term Evolution (LTE), Unet, semantic image segmentation, signal processing.
+    Wireless communication network (WiComNet), spectrum sensing, 5G new radio (5G NR), long-term evolution (LTE), Unet, semantic image segmentation, signal processing.
 \end{IEEEkeywords}
 
 \section{Introduction}
 
 \subsection{Spectrum sensing}
-Spectrum sensing is defined as identifying the availability and non-availability of wireless communication network or radio network in a particular frequency band. When frequency allocation scheme cannot provide high data rate demand constantly, it leads to waste spectrum resources that can utilize to allocate for others such 5G new radio (NR) or long-term evolution (LTE) in the same time. Therefore, spectrum sensing for 5G NR and LTE became a main topic that have many challenges, addressing the research direction to increase effectiveness performance and utilizing limited spectrum resource. Figure 1 show the example of spectrum sensing for 5G and LTE application.
+Spectrum sensing is defined as identifying the availability and non-availability of wireless communication network or radio network in particular frequency bands. When frequency allocation scheme cannot provide high data rate demand constantly, it leads to waste spectrum resources that can utilize to allocate for others such 5G new radio (NR) or long-term evolution (LTE) at the same time. Therefore, spectrum sensing for 5G NR and LTE became a main topic that contained many challenges, addressing the research direction to increase effectiveness performance and utilizing limited spectrum resource. The figure 1 shows the example of spectrum sensing for 5G and LTE application.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.35\textwidth]{img/Design-Overview.jpg}
+    \includegraphics[width=0.4\textwidth]{img/Design-Overview.jpg}
     \caption{Spectrum sensing for 5G and LTE application.}
     \label{fig1}
 \end{figure}
 
 \\
 \indent 
-In the past, numerous sensing techniques were showed in \cite{YucekSpectrumSensing}, using sensing algorithms, Multi-Dimensional spectrum sensing, channel estimation, and cooperative sensing. Nevertheless, spectrum sensing task met a big challenging in hardware requirements \cite{YucekSpectrumSensing}, this task requires high sampling rates, high resolution analog to digital converters (ADC) with large dynamic range, and high performance of processor. On the other hand, Cognitive wireless communication can be identified immediately by sensing duration and frequency. However, this method trades off between performance and sensing algorithms. Since their introduction, researches spent efforts to tackle improved spectrum sensing problems, addressing various challenges and introducing innovative solutions to increase prediction ratio and performance in cognitive wireless communication network. Furthermore, prominent surveys on this topic were introduced in \cite{kumar2024analysis}, \cite{YucekSpectrumSensing}, \cite{ali2016advances}, and \cite{liyanaarachchi2021optimized}.
+In the past, numerous sensing techniques were showed in \cite{YucekSpectrumSensing}, using sensing algorithms, Multi-Dimensional spectrum sensing, channel estimation, and cooperative sensing. Nevertheless, spectrum sensing tasks met a big challenge in hardware requirements \cite{YucekSpectrumSensing}, this task required high sampling rates, high resolution analog to digital converters (ADC) with large dynamic ranges, and high performance of processor. On the other hand, cognitive wireless communication can be identified immediately by sensing duration and frequency. However, this method had trades off between performance and sensing algorithms. Since their introduction, researches spent efforts to tackle improved spectrum sensing problems, addressing various challenges and introducing innovative solutions to increase prediction ratio and performance in cognitive wireless communication network. Furthermore, prominent surveys on this topic were introduced in \cite{kumar2024analysis}, \cite{YucekSpectrumSensing}, \cite{ali2016advances}, and \cite{liyanaarachchi2021optimized}.
 
 
 \subsection{Related work}
-In recent years, many works on cognitive wireless communication and radio network  were introduced to enhance sensing performance. In general, energy detector based sensing is common way of spectrum sensing because it offers low computational and implementation complexities, waveform base sensing increases sensing performance, cyclostationarity based sensing for detecting and matching filtering  primary user transmissions \cite{YucekSpectrumSensing}. On the other hand, several innovative deep learning (DL) methods were presented to tackle spectrum sensing performance. Applying convolution neural network for improved waveform classification \cite{huynh2024improved}, the work \cite{huynhthe2023intelligence} introduced innovative DL architecture to improve the spectrum sensing prediction ratio for 5G and LTE signals. Other works utilized deeplabv3+ \cite{nguyen2023accurate} and DetectNet \cite{gao2019deep} to increase accuracy for spectrum sensing task. Nevertheless, while sensing algorithms have a trades-off between hardware performance and computation complexities, DL models offer higher parameters to reach a high level of precision that requires considerable hardware resources.
+In recent years, many works on cognitive wireless communication and radio network  were introduced to enhance sensing performance. In general, the energy detector based sensing was common way of spectrum sensing because it offered low computational and implementation complexities, waveform base sensing increased sensing performance, cyclostationarity based sensing for detecting and matching filtering  primary user transmissions \cite{YucekSpectrumSensing}. On the other hand, several innovative deep learning (DL) methods were presented to tackle spectrum sensing performance. Applying convolution neural network for improved waveform classification \cite{huynh2024improved}, the work \cite{huynhthe2023intelligence} introduced innovative DL architecture to improve the spectrum sensing prediction ratio for 5G and LTE signals. Other works utilized deeplabv3+ \cite{nguyen2023accurate} and DetectNet \cite{gao2019deep} to increase accuracy for spectrum sensing task. Nevertheless, while sensing algorithms had a trades-off between hardware performance and computation complexities, DL models offered higher parameters to reach a high level of precision that required considerable hardware resources.
 
 \subsection{Contribution}
-In this work, we utilize DL methods to tackle sensing tasks and propose a innovative DL architecture based on Unet called wireless communication network (WiComNet), which reduces significantly complexity and enhances sensing performance for 5G and LTE signals. Unet was a fully convolutional network \cite{ronneberger2015u} using special for semantic segmentation images, it was designed with parallel encoder-decoder and connecting each layer by skip connection. Furthermore, Unetpp and other variant models were showed by the authors \cite{zhou2019unet++} that improve dramatically prediction ratio for image segmentation tasks. Nevertheless, the drawback of these models is that they offer significantly complexities and require considerable hardware resources. In term of decreasing complexities, we presented a WiComNet architecture that incorporated depthwise separable convolution \cite{CholletXception} and recurrent residual convolution \cite{AlomNuclei} \cite{he2016deep} \cite{aghalari2021brain}, replacing for Unet blocks in each layer of encoder and decoder paths. On the other hand, atrous pyramid spatial pooling modules \cite{ChenAtrous} were adapted between encoder and decoder paths that enhanced features extraction in multiple scales. In summary, we make the following two main contributions:
+In this work, we utilized DL methods to tackle sensing tasks and proposed a innovative DL architecture based on Unet called wireless communication network (WiComNet), which reduced significantly complexity and enhanced sensing performance for 5G and LTE signals. Unet was a fully convolutional network \cite{ronneberger2015u} using special for semantic segmentation images, it was designed with parallel encoder-decoder and connecting each layer by skip connections. Furthermore, Unetpp and other variant models were showed by the authors \cite{zhou2019unet++} that improved dramatically prediction ratio for image segmentation tasks. Nevertheless, the drawback of these models was that they offered significantly complexities and required considerable hardware resources. In term of decreasing complexities, we presented a WiComNet architecture that incorporated depthwise separable convolution \cite{CholletXception} and recurrent residual convolution \cite{AlomNuclei} \cite{he2016deep} \cite{aghalari2021brain}, replacing for Unet blocks in each layer of encoder and decoder paths. On the other hand, atrous pyramid spatial pooling modules \cite{ChenAtrous} were adapted between encoder and decoder paths that enhanced features extraction in multiple scales. In summary, we made the following two main contributions:
 \begin{itemize}
 \item[1.] Addressing spectrum sensing for 5G and LTE problems and utilizing DL methods to tackle spectrum sensing tasks.
-\item[2.] Introduction a innovative WiComNet architecture based on Unet that reduces significant complexities and enhances sensing performance for 5G and LTE signals.
+\item[2.] Introduction a innovative WiComNet architecture based on Unet reduces significant complexities and enhances sensing performance for 5G and LTE signals.
 \end{itemize}
 
 
@@ -84,11 +85,11 @@ In this work, we utilize DL methods to tackle sensing tasks and propose a innova
 \subsection{Signal processing}
 Nowadays, over-the-air communication systems have a vital role in diverse scenarios and applications \cite{lin20215g}. This work mainly considers about 5G NR and LTE communication systems. In practical terms, received signals (RX signal) from different sources in figure \ref{fig1} can be defined by formula (\ref{eq:rxsig}), where \( y(t) \) denotes for the RX signal, \( x(t) \) is the transmitted signal (TX signal), the channel response \(h(t)\), and \(n(t)\) presents for the addition of noise. 
 \begin{equation}
-    y(t) = (x(t) *\footnote{\label{Convop}*: denotes for convolution operation} h(t)) + n(t)
+    y(t) = (x(t) *\footnote{\label{Convop}*: representation for convolution operation} h(t)) + n(t)
     \label{eq:rxsig}
 \end{equation}
 
-\indent Short-time Fourier transformer (STFT) is a widely used signal processing technique for analyzing the frequency content of a signal over time. The RX signal (\ref{eq:rxsig}) can be presented in frequency domain by STFT function that is defined in (\ref{eq:spectrogram}). In detail, \( Y(f, t)\) represents for the spectrum of the RX signal at frequency \(f\) and time \(t\), \(y(t)\) is the input RX signal, \(w(t - \tau)\) denotes for the window function using for segmenting the signal into short frames. Furthermore, the energy spectrum is illustrated by the equation (\ref{eq:energy}), with \(E(t)\) denotes for energy spectrum at time \(t\).
+\indent Short-time Fourier transformer (STFT) is a widely used signal processing technique for analyzing the frequency content of a signal over time. The RX signal (\ref{eq:rxsig}) can be presented in frequency domain by STFT function that is defined in (\ref{eq:spectrogram}). In detail, \( Y(f, t)\) represents for the spectrogram of the RX signal at frequency \(f\) and time \(t\), \(y(t)\) is the input RX signal, \(w(t - \tau)\) denotes for the window function using for segmenting the signal into short frames. Furthermore, the energy spectrogram is illustrated by the equation (\ref{eq:energy}), with \(E(t)\) denotes for energy at time \(t\).
 
 \begin{equation}
     Y(f, t) = \int_{-\infty}^{\infty} y(\tau) \cdot w(t - \tau) \cdot e^{-j2\pi f \tau} \, d\tau 
@@ -100,7 +101,7 @@ Nowadays, over-the-air communication systems have a vital role in diverse scenar
 \end{equation}
 
 
-\indent The signal-to-noise (SNR) in both 5G and LTE systems can be calculated by comparing the power of the signal to the power of the noise. In wireless communication systems, SNR is typically defined as the ratio of the average received signal power to the average noise power over a specified bandwidth. In over-the-air communication systems, the signal power depends on factors such as the transmitted power, path loss, antenna gains, and fading effects. We define \(P_{\text{signal}}\) as signal power of RX 5G and LTE signals, it is demonstrated by formula (\ref{eq:Psig}) with \(P_{\text{tx}}\) is the transmitted power (TX power) and \(G\) denotes for the channel gain respectively. On the other hand, the noise power \(P_{\text{noise}}\) in (\ref{eq:Pnoise}) can be effected by thermal noise power \(P_{\text{thermal}}\), atmospheric noise \(P_{\text{atmospheric}}\) , and powers are generated from inter-symbols \(P_{\text{ISI}}\), co-channel \(P_{\text{CCI}}\), adjacent channel \(P_{\text{ACI}}\) interference respectively. 
+\indent The signal-to-noise (SNR) in both 5G and LTE systems can be calculated by comparing the power of the signal to the power of the noise. In wireless communication systems, SNR is typically defined as the ratio of the average received signal power to the average noise power over a specified bandwidth. In over-the-air communication systems, the signal power depends on factors such as the transmitted power, path loss, antenna gains, and fading effects. We define \(P_{\text{signal}}\) as signal power of RX 5G and LTE signals, it is demonstrated by formula (\ref{eq:Psig}) with \(P_{\text{tx}}\) is the transmitted power (TX power) and \(G\) denotes for the channel gain respectively. On the other hand, the noise power \(P_{\text{noise}}\) in (\ref{eq:Pnoise}) can be effected by thermal noise power \(P_{\text{thermal}}\), atmospheric noise \(P_{\text{atmospheric}}\) , and powers are generated from inter-symbols \(P_{\text{ISI}}\), co-channel \(P_{\text{CCI}}\), adjacent channel \(P_{\text{ACI}}\) interference, respectively. 
 
 \begin{equation}
     P_{\text{signal}} = P_{\text{tx}} \cdot G   
@@ -111,7 +112,7 @@ Nowadays, over-the-air communication systems have a vital role in diverse scenar
     \label{eq:Pnoise}
 \end{equation}
 
-\indent SNR formulas can be defined in (\ref{eq:SNR}) and (\ref{eq:SNRdb}). While \(SNR\) denotes the SNR ratio between \(P_{\text{signal}}\) and \(P_{\text{noise}}\), \(SNR_{\text{dB}}\) expresses the SNR ratio in decibels (dB).
+\indent SNR formulas can be defined in (\ref{eq:SNR}) and (\ref{eq:SNRdb}). While \(SNR\) denotes the SNR ratio between \(P_{\text{signal}}\) and \(P_{\text{noise}}\), \(SNR_{\text{dB}}\) expresses for SNR ratio in decibels (dB).
 
 \begin{equation}
     SNR = \frac{P_{\text{signal}}}{P_{\text{noise}}}    
@@ -123,51 +124,51 @@ Nowadays, over-the-air communication systems have a vital role in diverse scenar
     \label{eq:SNRdb}
 \end{equation}
 
-\indent There are several generation spectrum samples in figure \ref{fig2} that present for 5G NR, LTE, and overlapping 5G and LTE respectively.
+\indent There are several spectrogram generation samples in figure \ref{fig2} that presents for 5G NR, LTE, and overlapping 5G and LTE, respectively.
 
-\begin{figure}[h]
+\begin{figure}[!h]
     \centering
     \footnotesize
     \begin{tabular}{ccc}
         \includegraphics[width=0.14\textwidth]{img/LTE_frame_0.png} & \includegraphics[width=0.14\textwidth]{img/NR_frame_1506.png} &
         \includegraphics[width=0.14\textwidth]{img/LTE_NR_frame_0.png} & \\
-        a) & b) & c)
+        (a) & (b) & (c)
     \end{tabular}
-    \caption{spectrum samples: a) spectrum sample for LTE, b) spectrum sample for 5G NR, c) spectrum sample for overlapping 5G NR and LTE}
+    \caption{The spectrogram of received signal samples: (a) LTE, (b) 5G NR, (c) overlapping 5G NR and LTE}
     \label{fig2}
 \end{figure}
 
-\subsection{WiComNet: robust and cost-efficient convolution network}
-In this work, we propose the WiComNet that is a robust and cost-efficient convolution network (convnet) utilizing Unet-based architecture \cite{ronneberger2015u}. In general, this work utilizes depthwise separable convolutions (DSC) \cite{CholletXception} as convolution operation that replace for traditional convolutions. DSC uses inoperative depthwise convolution and pointwise convolution to reduce significantly the number of convolution operators. The detail of DSC can be illustrated in formula (\ref{eq:Fdsc}). Where \(F_{\text{DSC}}(f)\) denotes for the output of DSC convolution operation with the number of features extraction \(f\) , \(Dwconv(3\times3,1)_{\text{BN}}\) represents for depthwise convolution and batch normalization active function, it is connected directly by \(Conv(1\times1,f)_{\text{Relu}}\).
+\subsection{WiComNet: A robust and cost-efficient convolution network}
+In this work, we proposed the WiComNet that was defined as a robust and cost-efficient convolution network (convnet) utilizing Unet-based architecture \cite{ronneberger2015u}. In general, this work utilized depthwise separable convolutions (DSC) \cite{CholletXception} as convolution operation that replaced for traditional convolutions. DSC uses inoperative depthwise convolution and pointwise convolution to reduce significantly the number of convolution operators. The detail of DSC can be illustrated in formula (\ref{eq:Fdsc}). Where \(F_{\text{DSC}}(f)\) denotes for the output of DSC convolution operation with the number of features extraction \(f\) , \(Dwconv(3\times3,1)_{\text{BN}}\) represents for depthwise convolution and batch normalization active function, it is connected directly by \(Conv(1\times1,f)_{\text{Relu}}\).
 
 \begin{equation}
     F_{\text{DSC}}(f) = Dwconv(3\times3,1)_{\text{BN}} * Conv(1\times1,f)_{\text{Relu}}
     \label{eq:Fdsc}
 \end{equation}
 
-\indent On the other hand, this work applies atrous spatial pyramind pooling (ASPP) modules \cite{ChenAtrous} between encoder and decoder paths of WiComNet to enhance the ability of feature extraction in multiple scales. ASPP modules incorporate parallel four convolution layers, which include a \(1\times1\) convolution layer and three \(3\times3\) convolution layers in difference dilatation rates. The output of ASPP module is synthetic by a concatenation layer. The figure \ref{fig3} depicts ASPP module with \(r_1, r_2, r_3)\) represent for dilatation rates of three \(3\times3\) convolution layers. 
+\indent On the other hand, this work applied atrous spatial pyramid pooling (ASPP) modules \cite{ChenAtrous} between encoder and decoder paths of WiComNet to enhance the ability of feature extraction in multiple scales. ASPP modules incorporate parallel four convolution layers, which include a \(1\times1\) convolution layer and three \(3\times3\) convolution layers in difference dilatation rates. The output of ASPP module is synthetic by a concatenation layer. The figure \ref{fig3} depicts ASPP module with \(r_1, r_2, r_3\) represent for dilatation rates of three \(3\times3\) convolution layers. 
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.35\textwidth]{img/Design-ASPP.jpg}
+    \includegraphics[width=0.4\textwidth]{img/Design-ASPP.jpg}
     \caption{Atrous spatial pyramid pooling module}
     \label{fig3}
 \end{figure}
 
-\indent The output of ASPP module can be calculated by (\ref{eq:ASPP}). Where \(F_{\text{ASPP}}(f, r_1, r_2, r_3)\) illustrates for the output of ASPP module, while \(r_1, r_2, r_3\) represents for dilatation rates, \(f\) indicates for the number of input features. Furthermore, \(F_{\text{Concat}}\) denotes for the output of concatenation operation and \(Conv\) denotes for convolution layers respectively.
+\indent The output of ASPP module can be calculated by (\ref{eq:ASPP}). Where \(F_{\text{ASPP}}(f, r_1, r_2, r_3)\) illustrates for the output of ASPP module, while \(r_1, r_2, r_3\) represents for dilatation rates, \(f\) indicates for the number of input features. Furthermore, \(F_{\text{Concat}}\) denotes for the output of concatenation operation and \(Conv\) denotes for convolution layers, respectively.
 
 \begin{equation}
 \begin{aligned}
-    F_{\text{ASPP}}(f,r_1,r_2,r_3) = F_{\text{Concat}}\left( Conv(1 \times 1, f),\\ 
-    Conv(3 \times 3,f,r_1),   \\
-    Conv(3 \times 3,f,r_2),  \\
+    F_{\text{ASPP}}(f,r_1,r_2,r_3) = F_{\text{Concat}}\left( Conv(1 \times 1, f), \\
+    Conv(3 \times 3,f,r_1), 
+    Conv(3 \times 3,f,r_2),  
     Conv(3 \times 3,f,r_3) \right))
     \label{eq:ASPP}
 \end{aligned}
 \end{equation}
 
 
-\indent Inspired by the architectural innovation of the Recurrent Residual Block (RRB) as proposed in \cite{aghalari2021brain} and \cite{he2016deep}, we have revolutionized our network design. Specifically, we have overhauled both the encoder and decoder paths of our network by substituting the conventional Unet convolution blocks with RRB blocks. In WiComNet architecture, the output of each RRB block is seamlessly integrated with a cascade of DSC blocks, augmented by a residual path. This augmentation significantly amplifies the richness and complexity of the feature representation captured by our network, it is showed by figure \ref{fig4}. The formula (\ref{eq:RRB}) illustrates for the output of RRB block, \(F_{\text{add}}\) denotes for addition operation between both input \(F_{\text{in}}(f)\) and \(Conv(1\times1,f)\) from previous layer, in which \(F_{\text{in}}(f)\) is the result of previous layer, \(Conv(1\times1,f)\) and \(f\) are convolution layer and the number of input features respectively.
+\indent Inspired by the architectural innovation of the Recurrent Residual Block (RRB) as proposed in \cite{aghalari2021brain} and \cite{he2016deep}, we have revolutionized our network design. Specifically, we had overhauled both the encoder and decoder paths of our network by substituting the conventional Unet convolution blocks with RRB blocks. In WiComNet architecture, the output of each RRB block is seamlessly integrated with a cascade of DSC blocks, augmented by a residual path. This augmentation significantly amplifies the richness and complexity of the feature representation captured by our network, it is showed by figure \ref{fig4}. The formula (\ref{eq:RRB}) illustrates for the output of RRB block, \(F_{\text{add}}\) denotes for addition operation between both input \(F_{\text{in}}(f)\) and \(Conv(1\times1,f)\) from previous layer, in which \(F_{\text{in}}(f)\) is the result of previous layer, \(Conv(1\times1,f)\) and \(f\) are convolution layer and the number of input features respectively.
 
 
 \begin{equation}
@@ -179,54 +180,158 @@ In this work, we propose the WiComNet that is a robust and cost-efficient convol
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.35\textwidth]{img/Design-WiComNetB.jpg}
+    \includegraphics[width=0.4\textwidth]{img/Design-WiComNetB.jpg}
     \caption{Wireless communication network}
     \label{fig4}
 \end{figure}
 
-
-\indent The figure \ref{fig4} depicts for WiComNet architecture that was redesigned by Unet-based architecture \cite{ronneberger2015u}. The WiComNet architecture comprises five layers each for the encoder and decoder paths, ASPP modules are integrated into skip connection paths across multiple layers to enhance feature extraction across various scales. Our proposing design offers lowest complexity comparing to original Unet architecture, and other variants. The table \ref{tab1} compares complexities among our design with other architectures.
-
 \begin{table}[!htbp]
 \centering
-\caption{Network complexity comparision}
+\caption{Networks complexity comparison}
 \label{tab1}
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|l|l|l|l|}
 \toprule
 \hline
-\textbf{Network} & \textbf{No. Layers} & \textbf{No. Params} \\
+\textbf{Network} & \textbf{No.Layers} & \textbf{No.Params} \\
 \hline
-WiComNet & 125 & \textbf{7.8M} \\
-\hline
-ConvNet & 100 & 20.6M \\
-\hline
-Deeplabv3 & 100 & 20.6M  \\
-\hline
+\textbf{WiComNet} & \textbf{125} & \textbf{7.8M} \\
 Unet & 59 & 31.3M \\
-\hline
 Unetp & 101 & 42.5M  \\
-\hline
 UnetE & 101 & 42.3M \\
-\hline
 Unetpp & 101 & 43.5M  \\
+ConvNet & 100 & 20.6M \\
+Deeplabv3 & 100 & 20.6M  \\
 \hline
 \bottomrule
 \end{tabular}
 \end{table}
 
 
+\indent The figure \ref{fig4} depicts for WiComNet architecture that was redesigned by Unet-based architecture \cite{ronneberger2015u}. The WiComNet architecture comprised five layers each for the encoder and decoder paths, ASPP modules were integrated into skip connection paths across multiple layers to enhance feature extraction across various scales. Our proposing design offered lowest complexity comparing to original Unet architecture, and other variants. The table \ref{tab1} compares complexities among our design with other architectures.
 
-\section{Evaluation result}
-\subsection{Dataset and training resource}
 
-\subsection{WiComNet evaluation result}
+
+
+
+\section{Dataset, hardware resources, result and discussions}
+
+\subsection{Dataset and training resources}
+In this work, considering realistic challenges (e.g., cost and privacy), we used 5G toolbox in MatLab to generate a synthetic 5G and LTE spectrum with three difference types that include 5G, LTE, overlapping 5G and LTE frames, respectively. In particular, our dataset contained 5000 samples for each type, which \(128 \times 128\) image size combining with SNR range from 0 to 30 dB. We slipped dataset with \(80\%\), \(10\%\), and \(10\%\) for training, validation, and test respectively. In detail, the training process was executed on a state-of-the-art computing system renowned for its high-performance capabilities, featuring a formidable 3.00GHz central processing unit (CPU) combining with cutting-edge graphic processing unit (GPU) RTX 2080. The computing resources include a substantial 16GB of memory capacity. Furthermore, training option sets up with initialize learning rate 0.001, using \(piecewise\) learning rate schedule respectively. Training process executed in 40 epochs and validated every 1000 iterations. For more detail information about dataset and training resources, following to table \ref{tab2}.
+
+\begin{table}[htbp]
+\centering
+\caption{Hardware resources and training options}
+\label{tab2}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\multicolumn{2}{|c|}{\textbf{Hardware Resources}} & \multicolumn{2}{c|}{\textbf{Training Options}} \\ \hline
+CPU & 3.0GHz & No. epochs & 40 \\ 
+GPU & RTX 2080 & Learning rate & 0.001 \\
+Memory & 16GB & Learning rate schedule & \(piecewise\) \\ 
+MatLab version & R2023 & Validation frequency & 1000 \\
+\hline
+\multicolumn{4}{|c|}{\textbf{Dataset Information}} \\
+\hline
+\textbf{Category} & \textbf{No. Samples} & \textbf{Image size} & \textbf{SNR (dB)}\\
+\hline
+LTE & 5000 & \(128 \times 128\) & [0 30] \\
+5G & 5000 & \(128 \times 128\) & [0 30]\\
+5G and LTE & 5000 & \(128 \times 128\)& [0 30]  \\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+
+\subsection{Simulation and evaluation result}
+
+We evaluated networks in four metrics, which include global accuracy, average loss, weight intersection-over-union (\(IoU\)), and mean boundary F1 (BF) score. These metrics are widely used to evaluate prediction ratio of semantic segmentation. Following to table \ref{tab3} for the detail information of our results. Weight \(IoU\) is defined in formula (\ref{eq:Iou}) as a metric commonly used in the evaluation of semantic segmentation models, where \(TP_c\), \(FP_c\), and \(FN_c\) denotes for  the number of true positive, false positive, and false negative pixels for class \(c\),  respectively. The formula (\ref{eq:BFScore}) presents for mean BF score with \(N\) is the total number of classes or objects.
+
+
+\begin{equation}
+\begin{aligned}
+    IoU_c = \frac{TP_c}{TP_c + FP_c + FN_c}
+    \label{eq:Iou}
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+    \text{MeanBFScore} = \frac{1}{N} \sum_{i=1}^{N} \frac{2 \cdot \text{Precision}_i \cdot \text{Recall}_i}{\text{Precision}_i + \text{Recall}_i}
+    \label{eq:BFScore}
+\end{aligned}
+\end{equation}
+
+
+\begin{table}[!htbp]
+\centering
+\caption{Simulation result comparison}
+\label{tab3}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\toprule
+\hline
+\textbf{Network}  & \textbf{G.Accuracy} &  \textbf{Avg.Loss} & \textbf{W.IoU} & \textbf{M.BFScore} \\
+\hline
+\textbf{WiComNet}  & \textbf{97.233} & \textbf{0.0713} & \textbf{94.611} & \textbf{87.32}  \\
+Unet   & 98.227 & 0.0766  &  96.539 & 90.56\\
+Unetp   & 98.07 & 0.0754  &   96.245 & 89.206\\
+UnetE   & 97.844 & 0.0835  & 95.821  & 88.056 \\
+Unetpp   & 97.981 & 0.0801  & 96.074 & 88.892 \\
+ConvNet   & 39.696 & 1.2742 & 19.328 & 15.612 \\
+Deeplabv3   & 46.266 & 1.1725  &  33.878 & 14.397 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[!h]
+    \centering
+    \footnotesize
+    \begin{tabular}{cccc}
+        \includegraphics[width=0.25\textwidth]{img/confusion_matrix_0dB.jpg} & 
+        \includegraphics[width=0.25\textwidth]{img/confusion_matrix_15dB.jpg} & \\ (a) & (b) \\
+        \includegraphics[width=0.25\textwidth]{img/confusion_matrix_30dB.jpg} & 
+        \includegraphics[width=0.25\textwidth]{img/confusion_matrix_alldB.jpg} & \\ (c) & (d)
+    \end{tabular}
+    \caption{Confusion matrix at difference SNR levels: (a) 0dB, (b) 15dB, (c) 30dB, (d) [0 80] dB}
+    \label{fig5}
+\end{figure}
+
+\begin{figure}[!h]
+    \centering
+    \footnotesize
+    \begin{tabular}{c}
+        \includegraphics[width=0.4\textwidth]{img/accuracy_SNRs.jpg}
+    \end{tabular}
+    \caption{Accuracy evaluation under difference noise levels}
+    \label{fig6}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \footnotesize
+    \begin{tabular}{ccc}
+        \includegraphics[width=0.45\textwidth]{img/Visualization_10dB.jpg} & \\(a)\\  \includegraphics[width=0.45\textwidth]{img/Visualization_30dB.jpg} & \\(b)\\ 
+        \includegraphics[width=0.45\textwidth]{img/Visualization_60dB.jpg} & \\(c)\\ 
+    \end{tabular}
+    \caption{Visualization of received spectrograms in various SNR levels: (a) 10dB, (b) 30dB, (c) 60dB}
+    \label{fig7}
+\end{figure}
+
+In reference to table \ref{tab3} and \ref{tab1}, WiComNet outperformed superior performance, achieving an impressive \(97.223\%\) global accuracy. In comparison, ConvNet and Deeplabv3 exhibited considerably lower global accuracy of \(39.696\%\) and \(46.266\%\), respectively. Our proposal network consistently maintained a consistently high level of accuracy and performance, comparing to that of Unet-based architectures, while significantly reducing complexity. Specially, it achieved the same global accuracy while reducing the number of parameters by approximately \(80\%\), comparing to Unet, Unetpp, Unetp, and UnetE \cite{ronneberger2015u} \cite{zhou2019unet++}. The figure \ref{fig5}, \ref{fig6} present the confusion matrix generated during the evaluation of WiComNet model, alongside the training accuracy evaluation process, comparing our model with others. Following the confusion matrix, this study achieved notable prediction outcomes across four distinct classes in difference SNR ranges. It is true that the prediction performance increased corresponding with higher SNR levels, we evaluated our results using test samples spanning various SNR levels, ranging from -5dB to 30dB. Outcome in figure \ref{fig6} depicted that our model acquired significant predictive accuracy across difference SNR ranges, demonstrating a robust prediction performance, particularly at higher 5dB levels. In summary, these results suggested that WiComNet substantially outperformed strongly semantic segmentation classification performance in all categories (i.e., 5G NR, LTE, noise, and unknown).
+
+Regarding evaluation results in figure \ref{fig7} using several samples in various SNR levels, this work evaluated corresponding three overlapping 5F and LTE spectrograms at 10dB, 30dB, and 60dB SNR levels. In general, the classification accuracy improved comprehensively SNR levels exceeding 30dB (e.g., the proportion of corrected prediction labels). Respectively, with a 10dB increase in noise level, the prediction of 5G and LTE labels was not relatively accurate, with an incorrect prediction in the 5G label. Nevertheless, it exhibited a significant improvement in classification results for 5G, LTE, and noise at 30dB. Therefore, the results yielded precise label predictions at higher SNR levels surpassing 30dB. Specially, achieving accurate predictions at 60dB. These consequence demonstrated that our network outperformed outstanding performance that is suitable for real-world applications.
+
 
 \section{Conclusion}
+In this paper, we presented a innovative WiComNet utilizing Unet-based architecture, outperforming impressive performance in all difference SNR levels of 5G and LTE prediction spectrograms. Indeed, our study tackled performance problems when using DL for the spectrum sensing undertaking. Our proposing network reduced significantly complexity comparing to Unet-based architectures and other variants, utilizing cutting-edge DL techniques to create robust and cost efficient network. WiComNet attained classification robustness in simulation on 5G and LTE spectrograms dataset, combining with high proportion of addition of noise, making it suitable for real-world conditions. 
 
 
 
 \bibliographystyle{IEEEtran}
 \bibliography{reference}
+
 
 \end{document}
 
